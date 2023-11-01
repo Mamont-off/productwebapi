@@ -1,0 +1,28 @@
+﻿services:
+  web:
+    container_name: 'webapi'
+    image: 'webapi'
+    build:
+      context: ./ProductWebAPI
+      dockerfile: webapi.dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - "postgres"
+    networks:
+      - netB
+  
+  postgres:
+    container_name: 'postgres'
+    image: postgres:16
+    build:
+      context: ./ProductWebAPI
+      dockerfile: postgres.dockerfile
+    ports:
+      - "5432:5432"
+    networks:
+      - netB
+        
+networks:
+  netB:
+    driver: bridge
