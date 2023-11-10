@@ -5,6 +5,8 @@
     build:
       context: ./ProductWebAPI
       dockerfile: webapi.dockerfile
+    env_file:
+      - product.env
     ports:
       - "80:80"
     depends_on:
@@ -18,6 +20,10 @@
     build:
       context: ./ProductWebAPI
       dockerfile: postgres.dockerfile
+    env_file:
+      - postgres.env
+    secrets:
+      - postgres_secret
     ports:
       - "5432:5432"
     networks:
@@ -26,3 +32,7 @@
 networks:
   netB:
     driver: bridge
+    
+secrets:
+  postgres_secret:
+    file: ./postgres_psw.secret
